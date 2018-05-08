@@ -1,10 +1,38 @@
 import TorFirefox
 import PdfCompressor
-import watchdogg
 import os
 
-import multiprocessing
+def main ():
+	browser = TorFirefox.getFirefoxBrowser()
+	url = 'http://pdfcompressor.com/'
+	browser.get(url)
+	# dir_path = os.path.dirname(os.path.realpath(__file__))
+	##################################
+	# replace 2.pdf with the fileame #
+	##################################
+	file_path = os.getcwd() + "/2.pdf"
+	print file_path
+	PdfCompressor.compressPDF(browser, file_path)
+	
+	
+	flag1 = PdfCompressor.downloadCompPDF(browser)
+	if(flag1): #flag1 =0 when there is no fle to be downloaded
+		TorFirefox.unzipFile(os.getcwd()+"/pdfcompressor.zip",os.getcwd())
+		os.remove(os.getcwd()+"/pdfcompressor.zip")
 
+	browser.close()
+
+
+
+
+
+if __name__ == "__main__":
+	main()
+
+
+
+
+'''
 def main():
 	
 	startWatchdog()
@@ -52,11 +80,11 @@ def watchdog():
 	w.run()
 
 def startWatchdog():
-	'''
+	
 	### below updation is necessary in order to open watchdog
-	coz after the last step is done (prev run) the file is updated to "DONE"
-	and this same string is also required to close watchdog after all unzipping is done
-	'''
+	# coz after the last step is done (prev run) the file is updated to "DONE"
+	# and this same string is also required to close watchdog after all unzipping is done
+	# 
 	with open('/home/gugli/Documents/script_py/PdfCompressor/checkDownStatus.txt','w') as outFile:
 			outFile.write("blah")
 
@@ -66,5 +94,4 @@ def startWatchdog():
 	# p2 = multiprocessing.Process(name='p', target=sud)
 	# p2.start()
 
-if __name__ == "__main__":
-	main()
+'''
