@@ -18,13 +18,20 @@ def main():
 	browser = TorFirefox.getFirefoxBrowser()
 	url = 'http://pdfcompressor.com/'
 	browser.get(url)
-	compressPDF(browser, file_path)
-
-	downloadCompPDF(browser)
-	dir_path = os.path.dirname(os.path.realpath(__file__))
-	file_path = dir_path + "/" + "h2.pdf"
-	
+	# dir_path = os.path.dirname(os.path.realpath(__file__))
+	##################################
+	# replace 2.pdf with the fileame #
+	##################################
+	file_path = os.getcwd() + "/2.pdf"
 	print file_path
+	compressPDF(browser, file_path)
+	
+	
+	flag1 = downloadCompPDF(browser)
+	if(flag1): #flag1 =0 when there is no fle to be downloaded
+		TorFirefox.unzipFile(os.getcwd()+"/pdfcompressor.zip",os.getcwd())
+		os.remove(os.getcwd()+"/pdfcompressor.zip")
+
 	browser.close()
 
 def compressPDF(browser, filepath):
